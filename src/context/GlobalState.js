@@ -24,7 +24,7 @@ wrapping all children components*/
 export const GlobalProvider = ({ children }) => {
     const [state,  dispatch] = useReducer(AppReducer, initialState); //**
 
-    //Actions
+    //Actions  -- be wrapped in the Provider
     function deleteTransaction(id) {
         dispatch({
             type: 'DELETE_TRANSACTION',
@@ -32,9 +32,16 @@ export const GlobalProvider = ({ children }) => {
         })
     }
 
+    function addTransaction(transaction){
+        dispatch({
+            type: 'ADD_TRANSACTION',
+            payload: transaction
+        })
+    }
+
     return (<GlobalContext.Provider 
      value={{ transactions: state.transactions,
-        deleteTransaction
+        deleteTransaction,addTransaction
      }} >    
         {children} </GlobalContext.Provider> )
 }
