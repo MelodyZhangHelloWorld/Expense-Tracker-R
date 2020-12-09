@@ -16,13 +16,25 @@ const initialState = {
 //Create context
 export const GlobalContext = createContext(initialState);
 
+
 /* in order for other components to have access to 
 this stored global state, there should be a provider
 wrapping all children components*/
+// Provider component
 export const GlobalProvider = ({ children }) => {
     const [state,  dispatch] = useReducer(AppReducer, initialState); //**
 
+    //Actions
+    function deleteTransaction(id) {
+        dispatch({
+            type: 'DELETE_TRANSACTION',
+            payload: id
+        })
+    }
+
     return (<GlobalContext.Provider 
-     value={{ transactions: state.transactions}} >    
+     value={{ transactions: state.transactions,
+        deleteTransaction
+     }} >    
         {children} </GlobalContext.Provider> )
 }
